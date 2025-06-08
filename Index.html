@@ -47,15 +47,15 @@
         }
 
         .bg-slide:nth-child(1) {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB2aWV3Qm94PSIwIDAgMTkyMCAxMDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiBmaWxsPSIjMDAwMDAwIi8+CjxjaXJjbGUgY3g9Ijk2MCIgY3k9IjU0MCIgcj0iMjAwIiBmaWxsPSIjMDBmZjAwIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4K');
+            background-image: url(images\ \(3\).jpg);
         }
 
         .bg-slide:nth-child(2) {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB2aWV3Qm94PSIwIDAgMTkyMCAxMDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiBmaWxsPSIjMDAwMDAwIi8+CjxjaXJjbGUgY3g9Ijk2MCIgY3k9IjU0MCIgcj0iMTUwIiBmaWxsPSIjMDBmZjAwIiBmaWxsLW9wYWNpdHk9IjAuMTUiLz4KPC9zdmc+Cg==');
+            background-image: url(images\ \(2\).jpg);
         }
 
         .bg-slide:nth-child(3) {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB2aWV3Qm94PSIwIDAgMTkyMCAxMDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiBmaWxsPSIjMDAwMDAwIi8+CjxjaXJjbGUgY3g9Ijk2MCIgY3k9IjU0MCIgcj0iMTAwIiBmaWxsPSIjMDBmZjAwIiBmaWxsLW9wYWNpdHk9IjAuMiIvPgo8L3N2Zz4K');
+            background-image: url(download\ \(5\)\ -\ Copia.jpg);
         }
 
         /* Overlay */
@@ -533,7 +533,7 @@
     </footer>
 
     <!-- Audio Element -->
-    <audio id="backgroundAudio" loop>
+    <audio id="backgroundAudio" loop autoplay>
         <!-- Substitua pela URL da sua música -->
         <source src="The 4 Seasons, Op. 8⧸4, RV 297, ＂Winter＂.mp3" type="audio/mpeg">
         <!-- Fallback - você pode adicionar mais formatos aqui -->
@@ -583,8 +583,20 @@
             audio.volume = volumeSlider.value / 100;
         }
         
-        // Inicializar volume
+        // Inicializar volume e autoplay
         audio.volume = 0.5;
+        
+        // Tentar iniciar o autoplay
+        document.addEventListener('DOMContentLoaded', function() {
+            audio.play().catch(e => {
+                console.log('Autoplay bloqueado pelo navegador. Clique em qualquer lugar para iniciar a música.');
+                // Fallback: iniciar música no primeiro clique do usuário
+                document.addEventListener('click', function startAudio() {
+                    audio.play().catch(e => console.log('Erro ao reproduzir áudio:', e));
+                    document.removeEventListener('click', startAudio);
+                }, { once: true });
+            });
+        });
 
         // Matrix rain effect
         function createMatrixRain() {
